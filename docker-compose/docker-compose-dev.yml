@@ -1,0 +1,28 @@
+version: '2'
+services:
+
+  game-golf-dev-1:
+    image: game-golf
+    volumes:
+      - /var/log/me/dev:/log
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - 'SPRING_PROFILES_ACTIVE=dev'
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
+      - JHIPSTER_SLEEP=0
+      - JAVA_OPTS=-Djgroups.tcp.address=NON_LOOPBACK -Djava.net.preferIPv4Stack=true
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://airtag-db:5432/gamegolf?useLegacyDatetimeCode=false&serverTimezone=UTC
+    ports:
+      - 8088:8088
+    networks:
+      - airtag_default
+
+networks:
+  airtag_default:
+    external: true
+  default:
+    driver: bridge
+
+
